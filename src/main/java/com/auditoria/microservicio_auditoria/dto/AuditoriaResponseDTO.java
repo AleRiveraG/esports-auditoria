@@ -11,6 +11,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class AuditoriaResponseDTO {
 
+    private Long idAuditoria;
     private String detalle;
     private LocalDate fecha;
 
