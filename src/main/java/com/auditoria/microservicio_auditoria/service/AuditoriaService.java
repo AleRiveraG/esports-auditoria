@@ -2,6 +2,7 @@ package com.auditoria.microservicio_auditoria.service;
 
 import com.auditoria.microservicio_auditoria.dto.AuditoriaRequestDTO;
 import com.auditoria.microservicio_auditoria.dto.AuditoriaResponseDTO;
+import com.auditoria.microservicio_auditoria.exception.AuditoriaNotFoundException;
 import com.auditoria.microservicio_auditoria.model.Auditoria;
 import com.auditoria.microservicio_auditoria.repository.AuditoriaRepository;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +34,12 @@ public class AuditoriaService {
     }
 
     public Optional<AuditoriaResponseDTO> buscarPorId(Long id){
-        return auditoriaRepository.findById(id).map(this::mapToDTO);
+         Optional<Auditoria> auditoria = auditoriaRepository.findById(id);
+
+         if(auditoria.isPresent()){
+             return auditoria.map(this::mapToDTO);
+         }
+         throw new AuditoriaNotFoundException("Auditoria con id "+id+" no encontrada");
     }
 
     public AuditoriaResponseDTO generarAuditoria(AuditoriaRequestDTO auditoria){

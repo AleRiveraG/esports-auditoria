@@ -1,6 +1,5 @@
 package com.auditoria.microservicio_auditoria.exception;
 
-import ch.qos.logback.core.encoder.EchoEncoder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -11,6 +10,16 @@ import java.util.HashMap;
 
 @RestControllerAdvice
 public class GlobalException {
+
+    @ExceptionHandler(AuditoriaNotFoundException.class)
+    public ResponseEntity<?> manejoAuditoriaNoEncontrada(AuditoriaNotFoundException e){
+        HashMap<String, Object> error = new HashMap<>();
+        error.put("Estado",404);
+        error.put("Mensaje",e.getMessage());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> manejoValidaciones(MethodArgumentNotValidException e) {
