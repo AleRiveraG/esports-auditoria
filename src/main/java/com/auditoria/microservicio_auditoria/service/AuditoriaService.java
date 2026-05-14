@@ -6,12 +6,14 @@ import com.auditoria.microservicio_auditoria.exception.AuditoriaNotFoundExceptio
 import com.auditoria.microservicio_auditoria.model.Auditoria;
 import com.auditoria.microservicio_auditoria.repository.AuditoriaRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuditoriaService {
@@ -44,6 +46,7 @@ public class AuditoriaService {
 
     public AuditoriaResponseDTO generarAuditoria(AuditoriaRequestDTO auditoria){
         Auditoria auditoria1 = new Auditoria(null, auditoria.getDetalle(), auditoria.getFecha());
+        log.info("Auditoria generada con exito!");
         return mapToDTO(auditoriaRepository.save(auditoria1));
     }
 
