@@ -39,8 +39,10 @@ public class AuditoriaService {
          Optional<Auditoria> auditoria = auditoriaRepository.findById(id);
 
          if(auditoria.isPresent()){
+             log.info("Auditoria con id {} encontrada con exito!",id);
              return auditoria.map(this::mapToDTO).orElseThrow();
          }
+         log.warn("Auditoria con id {} no encontrada",id);
          throw new AuditoriaNotFoundException("Auditoria con id "+id+" no encontrada");
     }
 
